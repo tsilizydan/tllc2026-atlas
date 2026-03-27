@@ -7,7 +7,7 @@
 // Application info
 define('APP_NAME', 'TSILIZY CORE');
 define('APP_VERSION', '1.0.0');
-define('APP_ENV', 'development'); // development | production
+define('APP_ENV', 'production'); // development | production
 
 // Path definitions
 define('ROOT_PATH', dirname(__DIR__));
