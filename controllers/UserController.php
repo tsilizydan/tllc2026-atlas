@@ -87,13 +87,17 @@ class UserController
         Session::validateCsrf();
         
         $validator = Validator::make($_POST)
-            ->required(['first_name', 'last_name', 'email', 'password', 'role_id'])
+            ->required('first_name', 'First Name')
+            ->required('last_name', 'Last Name')
+            ->required('email', 'Email')
+            ->required('password', 'Password')
+            ->required('role_id', 'Role')
             ->email('email')
             ->min('password', 8)
             ->unique('email', 'users', 'email');
         
         if ($validator->fails()) {
-            Session::flash('error', $validator->firstError());
+            Session::flash('error', array_values($validator->errors())[0]);
             redirect('users/create');
         }
         
@@ -118,9 +122,9 @@ class UserController
         
         // Handle avatar upload
         if (!empty($_FILES['avatar']['name'])) {
-            $result = handleFileUpload($_FILES['avatar'], 'avatars', ['jpg', 'jpeg', 'png', 'gif']);
-            if ($result['success']) {
-                $data['avatar'] = $result['path'];
+            $uploaded = uploadFile($_FILES['avatar'], 'avatars', ['jpg', 'jpeg', 'png', 'gif']);
+            if ($uploaded !== null) {
+                $data['avatar'] = $uploaded;
             }
         }
         
@@ -185,11 +189,14 @@ class UserController
         }
         
         $validator = Validator::make($_POST)
-            ->required(['first_name', 'last_name', 'email', 'role_id'])
+            ->required('first_name', 'First Name')
+            ->required('last_name', 'Last Name')
+            ->required('email', 'Email')
+            ->required('role_id', 'Role')
             ->email('email');
         
         if ($validator->fails()) {
-            Session::flash('error', $validator->firstError());
+            Session::flash('error', array_values($validator->errors())[0]);
             redirect("users/edit?id={$id}");
         }
         
@@ -237,13 +244,13 @@ class UserController
         
         // Handle avatar upload
         if (!empty($_FILES['avatar']['name'])) {
-            $result = handleFileUpload($_FILES['avatar'], 'avatars', ['jpg', 'jpeg', 'png', 'gif']);
-            if ($result['success']) {
+            $uploaded = uploadFile($_FILES['avatar'], 'avatars', ['jpg', 'jpeg', 'png', 'gif']);
+            if ($uploaded !== null) {
                 // Delete old avatar if exists
                 if (!empty($user['avatar'])) {
                     deleteFile($user['avatar']);
                 }
-                $data['avatar'] = $result['path'];
+                $data['avatar'] = $uploaded;
             }
         }
         
@@ -366,9 +373,9 @@ class UserController
         
         // Handle avatar
         if (!empty($_FILES['avatar']['name'])) {
-            $result = handleFileUpload($_FILES['avatar'], 'avatars', ['jpg', 'jpeg', 'png', 'gif']);
-            if ($result['success']) {
-                $data['avatar'] = $result['path'];
+            $uploaded = uploadFile($_FILES['avatar'], 'avatars', ['jpg', 'jpeg', 'png', 'gif']);
+            if ($uploaded !== null) {
+                $data['avatar'] = $uploaded;
             }
         }
         

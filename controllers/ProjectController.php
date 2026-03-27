@@ -428,6 +428,8 @@ class ProjectController
             'pending_tasks' => count($tasks) - $completedCount
         ];
 
+        $company = CompanyProfile::get();
+
         printView('project_report_print', [
             'pageTitle' => 'Project Report: ' . ($project['name'] ?? ''),
             'project' => $project,
