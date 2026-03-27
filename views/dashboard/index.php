@@ -1,4 +1,11 @@
 <!-- Dashboard View -->
+<?php
+/** @var array $stats */
+$statsFinance   = is_array($stats['finance']   ?? null) ? $stats['finance']   : [];
+$statsInvoices  = is_array($stats['invoices']  ?? null) ? $stats['invoices']  : [];
+$statsProjects  = is_array($stats['projects']  ?? null) ? $stats['projects']  : [];
+$statsClients   = is_array($stats['clients']   ?? null) ? $stats['clients']   : [];
+?>
 
 <!-- Stats Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -8,7 +15,7 @@
             <div>
                 <p class="text-sm font-medium text-gray-500">Total Revenue</p>
                 <p class="text-2xl font-bold text-gray-900 mt-1">
-                    <?= formatCurrency($stats['finance']['total_revenue'] ?? 0) ?>
+                    <?= formatCurrency($statsFinance['total_revenue'] ?? 0) ?>
                 </p>
             </div>
             <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -18,7 +25,7 @@
         <div class="mt-3 flex items-center text-sm">
             <span class="text-green-600">
                 <i class="fas fa-arrow-up mr-1"></i>
-                <?= formatCurrency($stats['finance']['monthly_income'] ?? 0) ?>
+                <?= formatCurrency($statsFinance['monthly_income'] ?? 0) ?>
             </span>
             <span class="text-gray-400 ml-2">this month</span>
         </div>
@@ -30,7 +37,7 @@
             <div>
                 <p class="text-sm font-medium text-gray-500">Outstanding</p>
                 <p class="text-2xl font-bold text-gray-900 mt-1">
-                    <?= formatCurrency($stats['finance']['outstanding_invoices'] ?? 0) ?>
+                    <?= formatCurrency($statsFinance['outstanding_invoices'] ?? 0) ?>
                 </p>
             </div>
             <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
@@ -38,8 +45,8 @@
             </div>
         </div>
         <div class="mt-3 flex items-center text-sm">
-            <span class="text-gray-600"><?= $stats['invoices']['sent'] ?? 0 ?> pending</span>
-            <span class="text-red-500 ml-2"><?= $stats['invoices']['overdue'] ?? 0 ?> overdue</span>
+            <span class="text-gray-600"><?= $statsInvoices['sent'] ?? 0 ?> pending</span>
+            <span class="text-red-500 ml-2"><?= $statsInvoices['overdue'] ?? 0 ?> overdue</span>
         </div>
     </div>
     
@@ -49,7 +56,7 @@
             <div>
                 <p class="text-sm font-medium text-gray-500">Active Projects</p>
                 <p class="text-2xl font-bold text-gray-900 mt-1">
-                    <?= $stats['projects']['active'] ?? 0 ?>
+                    <?= $statsProjects['active'] ?? 0 ?>
                 </p>
             </div>
             <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -57,8 +64,8 @@
             </div>
         </div>
         <div class="mt-3 flex items-center text-sm">
-            <span class="text-gray-600"><?= $stats['projects']['total'] ?? 0 ?> total</span>
-            <span class="text-green-500 ml-2"><?= $stats['projects']['completed'] ?? 0 ?> completed</span>
+            <span class="text-gray-600"><?= $statsProjects['total'] ?? 0 ?> total</span>
+            <span class="text-green-500 ml-2"><?= $statsProjects['completed'] ?? 0 ?> completed</span>
         </div>
     </div>
     
@@ -68,7 +75,7 @@
             <div>
                 <p class="text-sm font-medium text-gray-500">Active Clients</p>
                 <p class="text-2xl font-bold text-gray-900 mt-1">
-                    <?= $stats['clients']['active'] ?? 0 ?>
+                    <?= $statsClients['active'] ?? 0 ?>
                 </p>
             </div>
             <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -76,7 +83,7 @@
             </div>
         </div>
         <div class="mt-3 flex items-center text-sm">
-            <span class="text-gray-600"><?= $stats['clients']['total'] ?? 0 ?> total</span>
+            <span class="text-gray-600"><?= $statsClients['total'] ?? 0 ?> total</span>
         </div>
     </div>
 </div>
